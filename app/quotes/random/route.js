@@ -8,7 +8,7 @@ const dataSource = 'https://en.wikipedia.org/wiki/AFI%27s_100_Years...100_Movie_
 export async function GET() {
     const randomId = Math.floor(Math.random() * data.length);
     const item = data[randomId];
-    
+
     return NextResponse.json({
         ...item,
         dataSource
