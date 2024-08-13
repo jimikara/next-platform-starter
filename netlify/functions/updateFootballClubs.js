@@ -24,7 +24,7 @@
         const season = 2024;
         const url = `https://api-football-v1.p.rapidapi.com/v3/standings?season=${season}&league=${league.leagueId}`;
         
-        return await axios.get(url, {
+        return axios.get(url, {
           headers: {
             'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
             'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
