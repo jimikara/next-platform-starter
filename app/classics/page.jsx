@@ -1,8 +1,8 @@
 import { FeedbackForm } from 'components/feedback-form';
 import { Markdown } from '../../components/markdown';
-import { getClubIds } from 'utils';
+// import { getClubIds } from 'utils';
 
-getClubIds();
+// getClubIds();
 
 export const metadata = {
     title: 'Classics'
