@@ -28,8 +28,7 @@
           headers: {
             'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
             'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-          }
-        )
+          });
       });
 
       const responses = await Promise.all(requests);
