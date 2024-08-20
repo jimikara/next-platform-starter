@@ -16,7 +16,7 @@ async function fetchLeagueTable() {
 
     await client.end();
 
-    console.log('leagueTable:', leagueTable);
+    // console.log('leagueTable:', leagueTable);
 
     return leagueTable;
 }

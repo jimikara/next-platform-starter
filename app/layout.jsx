@@ -3,7 +3,7 @@ import '../styles/globals.css';
 export const metadata = {
     title: {
         template: '%s | Netlify',
-        default: 'Netlify Starter'
+        default: 'Four to Follow 2024/25'
     }
 };
 

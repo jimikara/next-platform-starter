@@ -16,8 +16,6 @@ async function fetchLeagueTable() {
 
     await client.end();
 
-    console.log('leagueTable:', leagueTable);
-
     return leagueTable;
 }
 
@@ -43,42 +41,44 @@ export default async function LeagueTablePage() {
     };
 
     return (
-        <div className="pt-24">
+        <div className="py-24">
             <h1 className="text-xl">Four to Follow 2024/25</h1>
-            <table className="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Prem. Team</th>
-                        <th>Prem. Points</th>
-                        <th>Champ. Team</th>
-                        <th>Champ. Points</th>
-                        <th>L1 Team</th>
-                        <th>L1 Points</th>
-                        <th>L2 Team</th>
-                        <th>L2 Points</th>
-                        <th>Total Points</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {leagueTable.map((row, index) => (
-                        <tr key={row.player_name} className={`bg-opacity-75 ${prizeSpotClassnames(index)}`}>
-                            <td>{row.rank}</td>
-                            <td>{row.player_name}</td>
-                            <td>{row.premierleagueteam}</td>
-                            <td>{row.premierleaguepoints}</td>
-                            <td>{row.championshipteam}</td>
-                            <td>{row.championshippoints}</td>
-                            <td>{row.leagueoneteam}</td>
-                            <td>{row.leagueonepoints}</td>
-                            <td>{row.leaguetwoteam}</td>
-                            <td>{row.leaguetwopoints}</td>
-                            <td>{row.total_weightedpoints}</td>
+            <div className="overflow-scroll">
+                <table className="table-xs md:table-sm lg:table ">
+                    <thead className="text-xs md:text-baseline">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Prem. Team</th>
+                            <th>Prem. Points</th>
+                            <th>Champ. Team</th>
+                            <th>Champ. Points</th>
+                            <th>L1 Team</th>
+                            <th>L1 Points</th>
+                            <th>L2 Team</th>
+                            <th>L2 Points</th>
+                            <th>Total Points</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {leagueTable.map((row, index) => (
+                            <tr key={row.player_name} className={`bg-opacity-75 ${prizeSpotClassnames(index)}`}>
+                                <td>{row.rank}</td>
+                                <td>{row.player_name}</td>
+                                <td>{row.premierleagueteam}</td>
+                                <td>{row.premierleaguepoints}</td>
+                                <td>{row.championshipteam}</td>
+                                <td>{row.championshippoints}</td>
+                                <td>{row.leagueoneteam}</td>
+                                <td>{row.leagueonepoints}</td>
+                                <td>{row.leaguetwoteam}</td>
+                                <td>{row.leaguetwopoints}</td>
+                                <td>{row.total_weightedpoints}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <div className="flex mt-8 items-center">
                 <div className={`w-4 h-4 mr-2 ${prizeSpotColors[0]}`}></div> <p>1st: £140</p>
                 <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[1]}`}></div> <p>2nd: £75</p>
