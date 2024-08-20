@@ -62,9 +62,9 @@ export default async function LeagueTablePage() {
                     </thead>
                     <tbody>
                         {leagueTable.map((row, index) => (
-                            <tr key={row.player_name} className={`bg-opacity-75 ${prizeSpotClassnames(index)}`}>
+                            <tr key={row.player_name} className={`bg-opacity-65 ${prizeSpotClassnames(index)}`}>
                                 <td>{row.rank}</td>
-                                <td>{row.player_name}</td>
+                                <td className="font-semibold">{row.player_name}</td>
                                 <td>{row.premierleagueteam}</td>
                                 <td>{row.premierleaguepoints}</td>
                                 <td>{row.championshipteam}</td>
@@ -73,7 +73,7 @@ export default async function LeagueTablePage() {
                                 <td>{row.leagueonepoints}</td>
                                 <td>{row.leaguetwoteam}</td>
                                 <td>{row.leaguetwopoints}</td>
-                                <td>{row.total_weightedpoints}</td>
+                                <td className="font-semibold">{row.total_weightedpoints}</td>
                             </tr>
                         ))}
                     </tbody>
