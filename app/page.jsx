@@ -57,7 +57,7 @@ export default async function LeagueTablePage() {
                             <th>L1 Points</th>
                             <th>L2 Team</th>
                             <th>L2 Points</th>
-                            <th>Total Points</th>
+                            <th className="text-right pr-3">Total Points</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,7 @@ export default async function LeagueTablePage() {
                                 <td>{row.leagueonepoints}</td>
                                 <td>{row.leaguetwoteam}</td>
                                 <td>{row.leaguetwopoints}</td>
-                                <td className="font-semibold">{row.total_weightedpoints}</td>
+                                <td className="font-semibold text-right pr-3">{row.total_weightedpoints}</td>
                             </tr>
                         ))}
                     </tbody>
