@@ -41,11 +41,11 @@ export default async function LeagueTablePage() {
     };
 
     return (
-        <div className="py-24">
+        <div className="pt-8 pb-24">
             <h1 className="text-xl">Four to Follow 2024/25</h1>
             <div className="overflow-scroll">
-                <table className="table-xs md:table-sm lg:table ">
-                    <thead className="text-xs md:text-baseline">
+                <table className="table-xs md:table-sm 2xl:table-md">
+                    <thead className="text-xs md:text-baseline text-left">
                         <tr>
                             <th>Rank</th>
                             <th>Name</th>
