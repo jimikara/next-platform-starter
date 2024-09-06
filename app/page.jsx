@@ -19,21 +19,23 @@ async function fetchLeagueTable() {
     return leagueTable;
 }
 
-export async function getStaticProps() {
-    const leagueTableData = await fetchLeagueTable();
+// export async function getStaticProps() {
+//     const leagueTableData = await fetchLeagueTable();
 
-    return {
-        props: {
-            leagueTableData
-        },
-        // Revalidate every 86400 seconds (24 hours)
-        revalidate: 86400 // Time in seconds for revalidation (1 day)
-    };
-}
+//     return {
+//         props: {
+//             leagueTableData
+//         },
+//         // Revalidate every 86400 seconds (24 hours)
+//         revalidate: 86400 // Time in seconds for revalidation (1 day)
+//     };
+// }
 
 const prizeSpotColors = ['bg-amber-300', 'bg-gray-300', 'bg-orange-300', 'bg-pink-100', 'bg-blue-100'];
 
 export default async function LeagueTablePage() {
+    const leagueTable = await fetchLeagueTable();
+
     const prizeSpotClassnames = (index) => {
         if (index === 0) {
             return 'bg-amber-300';
@@ -71,7 +73,7 @@ export default async function LeagueTablePage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {leagueTableData.map((row, index) => (
+                        {leagueTable.map((row, index) => (
                             <tr key={row.player_name} className={`bg-opacity-65 ${prizeSpotClassnames(index)}`}>
                                 <td>{row.rank}</td>
                                 <td className="font-semibold">{row.player_name}</td>
