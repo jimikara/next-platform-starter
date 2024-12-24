@@ -12,7 +12,7 @@ export async function GET(request) {
     try {
         revalidatePath('/');
 
-        console.log('revalidation running----');
+        // set value of 'last updated'
 
         return NextResponse.json({ revalidated: true });
     } catch (error) {

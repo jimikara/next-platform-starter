@@ -13,16 +13,27 @@ async function fetchLeagueTable() {
 
     const res = await client.query('SELECT * FROM cached_league_table ORDER BY rank ASC');
     const leagueTable = res.rows;
+    const now = new Date();
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+
+    const prettyString = now.toLocaleString('en-GB', options);
 
     await client.end();
 
-    return leagueTable;
+    return { table: leagueTable, lastUpdatedAt: prettyString };
 }
 
 const prizeSpotColors = ['bg-amber-300', 'bg-gray-300', 'bg-orange-300', 'bg-pink-100', 'bg-blue-100'];
 
 export default async function LeagueTablePage() {
-    const leagueTable = await fetchLeagueTable();
+    const { table, lastUpdatedAt } = await fetchLeagueTable();
 
     const prizeSpotClassnames = (index) => {
         if (index === 0) {
@@ -42,9 +53,12 @@ export default async function LeagueTablePage() {
 
     return (
         <div className="pt-8 pb-24">
-            <h1 className="text-xl">Four to Follow 2024/25</h1>
+            <div className="flex items-baseline justify-between mb-4">
+                <h1 className="text-xl mb-0 mr-2">Four to Follow 2024/25</h1>
+                <p className="text-sm">Last auto update at: {lastUpdatedAt}</p>
+            </div>
             <div className="overflow-scroll">
-                <table className="table-xs md:table-sm 2xl:table-md">
+                <table className="w-full table-xs md:table-sm 2xl:table-md">
                     <thead className="text-xs md:text-baseline text-left">
                         <tr>
                             <th>Rank</th>
@@ -61,10 +75,16 @@ export default async function LeagueTablePage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {leagueTable.map((row, index) => (
-                            <tr key={row.player_name} className={`bg-opacity-65 ${prizeSpotClassnames(index)}`}>
+                        {table.map((row, index) => (
+                            <tr
+                                key={row.player_name}
+                                className={`
+                                bg-opacity-65 ${prizeSpotClassnames(index)} ${
+                                    index == 3 && 'border-b-2 border-b-indigo-600'
+                                }`}
+                            >
                                 <td>{row.rank}</td>
-                                <td className="font-semibold">{row.player_name}</td>
+                                <td className="font-medium">{row.player_name}</td>
                                 <td>{row.premierleagueteam}</td>
                                 <td>{row.premierleaguepoints}</td>
                                 <td>{row.championshipteam}</td>
@@ -73,16 +93,16 @@ export default async function LeagueTablePage() {
                                 <td>{row.leagueonepoints}</td>
                                 <td>{row.leaguetwoteam}</td>
                                 <td>{row.leaguetwopoints}</td>
-                                <td className="font-semibold text-right pr-3">{row.total_weightedpoints}</td>
+                                <td className="font-medium text-right pr-3">{row.total_weightedpoints}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
             <div className="flex mt-8 items-center">
-                <div className={`w-4 h-4 mr-2 ${prizeSpotColors[0]}`}></div> <p>1st: £140</p>
+                <div className={`w-4 h-4 mr-2 ${prizeSpotColors[0]}`}></div> <p>1st: £145</p>
                 <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[1]}`}></div> <p>2nd: £75</p>
-                <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[2]}`}></div> <p>3rd: £45</p>
+                <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[2]}`}></div> <p>3rd: £50</p>
                 <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[3]}`}></div> <p>4th: £25</p>
                 <div className={`w-4 h-4 mr-2 ml-5 ${prizeSpotColors[4]}`}></div> <p>Wooden Spoon: £10</p>
             </div>
