@@ -1,8 +1,10 @@
 const getFootballClubPoints = require('../../utils/getFootballClubPoints');
+const updateTimestamp = require('../../utils/updateTimestamp');
 
 exports.handler = async function (event, context) {
     try {
         const result = await getFootballClubPoints(42);
+        await updateTimestamp(4);
         return result;
     } catch (error) {
         console.error('Handler error:', error);
