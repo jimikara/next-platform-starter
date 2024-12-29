@@ -3,6 +3,8 @@ const { Client } = require('pg');
 async function updateTimestamp(divisionId) {
     if (!divisionId || divisionId <= 0 || divisionId > 4) return;
 
+    console.log('env', process.env);
+
     const client = new Client({
         user: process.env.DB_USER,
         host: process.env.DB_HOST,
@@ -22,13 +24,15 @@ async function updateTimestamp(divisionId) {
             columnName = 'champ_timestamp';
             break;
         case 3:
-            columName = 'league_one_timestamp';
+            columnName = 'league_one_timestamp';
             break;
         case 4:
-            columName = 'league_two_timestamp';
+            columnName = 'league_two_timestamp';
     }
 
     try {
+        console.log('col name', columnName);
+
         await client.query(
             `UPDATE data_update_times
             SET ${columnName} = NOW()

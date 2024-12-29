@@ -2,6 +2,8 @@ const { Client } = require('pg');
 const axios = require('axios');
 
 async function getFootballClubPoints(leagueId) {
+    console.log('>>>', process.env.DB_PASSWORD);
+
     const client = new Client({
         user: process.env.DB_USER,
         host: process.env.DB_HOST,

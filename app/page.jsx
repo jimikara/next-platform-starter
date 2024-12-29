@@ -12,8 +12,9 @@ async function fetchLeagueTable() {
     await client.connect();
 
     const res = await client.query('SELECT * FROM cached_league_table ORDER BY rank ASC');
+    const lastUpdateTimes = await client.query('SELECT * FROM data_update_times LIMIT 1');
     const leagueTable = res.rows;
-    const now = new Date();
+    const mostRecent = getMostRecentTimestamp(lastUpdateTimes.rows[0]);
     const options = {
         weekday: 'long',
         year: 'numeric',
@@ -23,11 +24,29 @@ async function fetchLeagueTable() {
         minute: '2-digit'
     };
 
-    const prettyString = now.toLocaleString('en-GB', options);
+    console.log('MR--', lastUpdateTimes.rows[0], mostRecent);
+
+    const prettyString = new Date(mostRecent).toLocaleString('en-GB', options);
 
     await client.end();
 
     return { table: leagueTable, lastUpdatedAt: prettyString };
+}
+
+function getMostRecentTimestamp(timestamps) {
+    const arr = Object.values(timestamps);
+
+    let mostRecent = arr[0];
+
+    for (let i = 1; i < arr.length; i++) {
+        const currentDate = new Date(arr[i]);
+        const mostRecentDate = new Date(mostRecent);
+        if (currentDate > mostRecentDate) {
+            mostRecent = arr[i];
+        }
+    }
+
+    return mostRecent;
 }
 
 const prizeSpotColors = ['bg-amber-300', 'bg-gray-300', 'bg-orange-300', 'bg-pink-100', 'bg-blue-100'];
