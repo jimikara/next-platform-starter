@@ -54,6 +54,41 @@ const prizeSpotColors = ['bg-amber-300', 'bg-gray-300', 'bg-orange-300', 'bg-pin
 export default async function LeagueTablePage() {
     const { table, lastUpdatedAt } = await fetchLeagueTable();
 
+    useEffect(() => {
+        function scheduleRefresh(targetHour, targetMinute, targetSecond) {
+            const now = new Date(); // Current time in the user's local time zone
+            const targetTime = new Date(
+                Date.UTC(
+                    now.getUTCFullYear(),
+                    now.getUTCMonth(),
+                    now.getUTCDate(),
+                    targetHour,
+                    targetMinute,
+                    targetSecond
+                )
+            );
+
+            // If the target time is in the past, schedule for the next day
+            if (targetTime <= now) {
+                targetTime.setUTCDate(targetTime.getUTCDate() + 1);
+            }
+
+            // Calculate time until refresh in milliseconds
+            const timeUntilRefresh = targetTime - now;
+
+            console.log(`Page will refresh at 07:15 GMT (in ${timeUntilRefresh / 1000} seconds)`);
+
+            // Set timeout to reload the page
+            setTimeout(() => {
+                console.log('reloading page at ', now);
+                window.location.reload();
+            }, timeUntilRefresh);
+        }
+
+        // Schedule the refresh at 07:15:00 GMT
+        scheduleRefresh(7, 15, 0);
+    }, []);
+
     const prizeSpotClassnames = (index) => {
         if (index === 0) {
             return 'bg-amber-300';
